@@ -67,9 +67,8 @@ const Home: BlitzPage = () => {
             margin-right: 15px !important;
           }
         }
-        body,
-        html {
-          overflow-x: hidden;
+        header {
+          overflow: hidden;
         }
       `}</style>
     </div>
