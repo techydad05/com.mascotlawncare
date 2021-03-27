@@ -10,6 +10,10 @@ import {
 import React from "react"
 import { ServerStyleSheets } from "@material-ui/core/styles"
 
+// added this because of error in console caused by the react gallery plugin
+React.useLayoutEffect = React.useEffect
+// fix eventually or figure something out
+
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheets = new ServerStyleSheets()

@@ -12,14 +12,18 @@ import LoginForm from "app/auth/components/LoginForm"
 
 import CssBaseline from "@material-ui/core/CssBaseline"
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
+import { brown, green } from "@material-ui/core/colors"
 import React from "react"
-
 import SimpleReactLightbox from "simple-react-lightbox"
 
 //You can customize this as you want and even move it out to a separate file
 const theme = createMuiTheme({
   palette: {
     type: "light",
+    text: {
+      primary: brown[900],
+      secondary: green[900],
+    },
   },
 })
 
