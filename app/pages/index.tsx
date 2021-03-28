@@ -83,9 +83,9 @@ const Home: BlitzPage = () => {
         <Toolbar>
           <Typography color="textSecondary" variant="h6" className={classes.title}>
             <img
-              src="/mascotlawncare.png"
+              src="/mascot-logo.png"
               alt="mascot lawncare logo"
-              style={{ width: "300px", maxWidth: "50%" }}
+              style={{ width: "50%", maxWidth: "500px" }}
             />
           </Typography>
           <Typography variant="h5">
