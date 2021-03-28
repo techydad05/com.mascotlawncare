@@ -18,15 +18,6 @@ import { Grid, Hidden, SvgIcon, Paper, FormControl, TextField, FormGroup } from 
 import Icon from "@material-ui/core/Icon"
 import Recaptcha from "react-recaptcha"
 
-import MowIcon from "../../public/mowing.svg"
-import CleanupIcon from "../../public/cleanup.svg"
-import HaulingIcon from "../../public/hauling.svg"
-import PruningIcon from "../../public/pruning.svg"
-import LandscapeIcon from "../../public/landscape.svg"
-import TreeIcon from "../../public/tree.svg"
-import AboutUsIcon from "../../public/aboutus.svg"
-import ServicesIcon from "../../public/services.svg"
-
 // import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 // import logout from "app/auth/mutations/logout"
 
@@ -122,7 +113,7 @@ const Home: BlitzPage = () => {
         <Grid className="content" container>
           <Grid item sm={12} md={6}>
             <Typography variant="body1" color="textPrimary">
-              <AboutUsIcon />
+              <Image src="/aboutus.svg" width="120px" height="85px" />
               Mascot Lawn Care iss locally owned and owner operated and has been serving the Central
               Florida area since 2008. We Also Have Operations in Dayton Ohio as well that is run by
               Matt Williams brother of Scott Williams who runs the Florida operations. Together we
@@ -134,7 +125,7 @@ const Home: BlitzPage = () => {
           </Grid>
           <Grid item sm={12} md={6}>
             <Typography variant="body1" color="textPrimary">
-              <ServicesIcon />
+              <Image src="/services.svg" width="120px" height="85px" />
               make list items here with material ui
               {/* <ul>
                 <li>Mascot Lawn Care provides commercial and residential pressure washing and lawn care services throughout Pinellas County.</li>
@@ -151,7 +142,7 @@ const Home: BlitzPage = () => {
             <Typography variant="h3" color="textSecondary">
               Lawn Care
             </Typography>
-            <MowIcon />
+            <Image src="/mowing.svg" width="100px" height="80px" />
           </Grid>
           <Grid
             container
@@ -163,14 +154,14 @@ const Home: BlitzPage = () => {
             <Typography variant="h3" color="textSecondary" align="center">
               Cleanup & Hauling
             </Typography>
-            <CleanupIcon />
-            <HaulingIcon />
+            <Image src="/cleanup.svg" width="100px" height="80px" />
+            <Image src="/hauling.svg" width="100px" height="80px" />
           </Grid>
           <Grid container alignItems="center" alignContent="center" justify="center">
             <Typography variant="h3" color="textSecondary">
               Landscape
             </Typography>
-            <LandscapeIcon />
+            <Image src="/landscape.svg" width="100px" height="80px" />
           </Grid>
           <Grid
             className="bottom"
@@ -182,7 +173,7 @@ const Home: BlitzPage = () => {
             <Typography variant="h3" color="textSecondary">
               Pruning
             </Typography>
-            <PruningIcon />
+            <Image src="/pruning.svg" width="100px" height="80px" />
           </Grid>
           <Grid
             className="bottom"
@@ -194,7 +185,7 @@ const Home: BlitzPage = () => {
             <Typography variant="h3" color="textSecondary">
               Light Treework
             </Typography>
-            <TreeIcon />
+            <Image src="/tree.svg" width="100px" height="80px" />
           </Grid>
         </Grid>
         <Grid container>
@@ -280,16 +271,13 @@ const Home: BlitzPage = () => {
           padding: 30px 10%;
           line-height: 2;
         }
-        .iconRow .MuiGrid-container {
-          width: 33%;
+        .iconRow {
+          padding: 20px 0;
           background: #ffe5c9;
         }
         .iconRow h3 {
           width: 100%;
           text-align: center;
-        }
-        .iconRow .bottom {
-          width: 50%;
         }
         .iconRow svg {
           margin: 20px;
