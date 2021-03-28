@@ -85,7 +85,7 @@ const Home: BlitzPage = () => {
             <img
               src="/mascot-logo.png"
               alt="mascot lawncare logo"
-              style={{ width: "50%", maxWidth: "500px" }}
+              style={{ width: "100%", maxWidth: "500px" }}
             />
           </Typography>
           <Typography variant="h5">
@@ -290,9 +290,15 @@ const Home: BlitzPage = () => {
           font-size: 0.875rem;
           color: #ffffff;
         }
+        .MuiToolbar-root {
+          flex-wrap: wrap;
+        }
         @media (min-width: 768px) {
           body.SRLOpened {
             margin-right: 15px !important;
+          }
+          .MuiToolbar-root {
+            flex-wrap: nowrap;
           }
         }
       `}</style>
