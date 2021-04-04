@@ -1,6 +1,9 @@
 const { sessionMiddleware, simpleRolesIsAuthorized } = require("@blitzjs/server")
 
 module.exports = {
+  env: {
+    EMAILJS_API: process.env.EMAILJS_APIKEY,
+  },
   middleware: [
     sessionMiddleware({
       isAuthorized: simpleRolesIsAuthorized,

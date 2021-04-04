@@ -14,9 +14,24 @@ import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
-import { Grid, Hidden, SvgIcon, Paper, FormControl, TextField, FormGroup } from "@material-ui/core"
+import {
+  Grid,
+  Hidden,
+  SvgIcon,
+  Paper,
+  FormControl,
+  TextField,
+  FormGroup,
+  List,
+  ListItem,
+  ListItemText,
+} from "@material-ui/core"
 import Icon from "@material-ui/core/Icon"
 import Recaptcha from "react-recaptcha"
+import Form from "app/core/components/Form"
+
+import emailjs, { init } from "emailjs-com"
+init("user_sfHHqVix3VlKerTBKwc66")
 
 // import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 // import logout from "app/auth/mutations/logout"
@@ -61,24 +76,43 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    white: {
+      color: theme.palette.common.white,
+    },
   })
 )
 
 const Home: BlitzPage = () => {
   const classes = useStyles()
   const [verified, setVerified] = useState(false)
+  const [email, setEmail] = useState("")
+  const [message, setMessage] = useState("")
 
   const verifyCallback = () => {
     setVerified(true)
     console.log(`captcha simple verification done`)
+    setTimeout(() => {
+      setVerified(false)
+      console.log(`verification is reset`)
+    }, 60000)
   }
   const callback = () => {
     console.log(`rendering captcha - verification is currently: ${verified}`)
   }
+  const onSubmit = () => {
+    if (verified) {
+      console.log("is verified sending mail")
+      emailjs.send("default_service", "template_fndut97", {
+        from_email: email,
+        message: message,
+      })
+      document.getElementById("contactForm")?.classList.add("hidden")
+      document.getElementById("tyMsg")?.classList.remove("hidden")
+    }
+  }
 
   return (
-    <div className="container">
-      {/* move to separate file eventually */}
+    <>
       <AppBar position="static" style={{ background: "green" }}>
         <Toolbar>
           <Typography color="textSecondary" variant="h6" className={classes.title}>
@@ -88,9 +122,9 @@ const Home: BlitzPage = () => {
               style={{ width: "100%", maxWidth: "500px" }}
             />
           </Typography>
-          <Typography variant="h5">
+          <Typography variant="h5" align="right" style={{ flexGrow: 1 }}>
             Call Now For Free Estimates!{" "}
-            <a href="tel:7277444979" style={{ textDecoration: "none", color: "#FFFFFF" }}>
+            <a href="tel:7277444979" style={{ textDecoration: "none", color: "#7CC641" }}>
               727-744-4979
             </a>
           </Typography>
@@ -106,90 +140,84 @@ const Home: BlitzPage = () => {
           </Hidden> */}
         </Toolbar>
       </AppBar>
-      <main>
-        <SRLWrapper>
-          <Gallery photos={photos} />
-        </SRLWrapper>
-        <Grid className="content" container>
-          <Grid item sm={12} md={6}>
-            <Typography variant="body1" color="textPrimary">
-              <Image src="/aboutus.svg" width="120px" height="85px" />
-              Mascot Lawn Care iss locally owned and owner operated and has been serving the Central
-              Florida area since 2008. We Also Have Operations in Dayton Ohio as well that is run by
-              Matt Williams brother of Scott Williams who runs the Florida operations. Together we
-              have 15 plus years experience in the Lawn industry. Combined we formed Mascot
-              (combination of Matt and Scott) Services. Both businesses are fully insured and strive
-              to provide quality service with competitive pricing. No matter what your budget is we
-              will find a plan that works for you.
-            </Typography>
-          </Grid>
-          <Grid item sm={12} md={6}>
-            <Typography variant="body1" color="textPrimary">
-              <Image src="/services.svg" width="120px" height="85px" />
-              make list items here with material ui
-              {/* <ul>
-                <li>Mascot Lawn Care provides commercial and residential pressure washing and lawn care services throughout Pinellas County.</li>
-                <li>Hauling service</li>
-                <li>Landscaping</li>
-                <li>Sod installation</li>
-                <li>Pressure Washing</li>
-              </ul> */}
-            </Typography>
-          </Grid>
+      <SRLWrapper>
+        <Gallery photos={photos} />
+      </SRLWrapper>
+      <Grid className="content" container>
+        <Grid id="aboutGrid" item sm={12} md={6}>
+          <Image src="/aboutus.svg" width="120px" height="85px" />
+          <span>
+            Mascot Lawn Care is locally owned and owner operated and has been serving the Central
+            Florida area since 2008. We Also Have Operations in Dayton Ohio as well that is run by
+            Matt Williams brother of Scott Williams who runs the Florida operations. Together we
+            have 15 plus years experience in the Lawn industry. Combined we formed Mascot
+            (combination of Matt and Scott) Services. Both businesses are fully insured and strive
+            to provide quality service with competitive pricing. No matter what your budget is we
+            will find a plan that works for you.
+          </span>
         </Grid>
-        <Grid className="iconRow" container>
-          <Grid container alignItems="center" alignContent="center" justify="center">
-            <Typography variant="h3" color="textSecondary">
-              Lawn Care
-            </Typography>
-            <Image src="/mowing.svg" width="100px" height="80px" />
-          </Grid>
-          <Grid
-            container
-            style={{ padding: "10px 20px" }}
-            alignItems="center"
-            alignContent="center"
-            justify="center"
-          >
-            <Typography variant="h3" color="textSecondary" align="center">
-              Cleanup & Hauling
-            </Typography>
-            <Image src="/cleanup.svg" width="100px" height="80px" />
-            <Image src="/hauling.svg" width="100px" height="80px" />
-          </Grid>
-          <Grid container alignItems="center" alignContent="center" justify="center">
-            <Typography variant="h3" color="textSecondary">
-              Landscape
-            </Typography>
-            <Image src="/landscape.svg" width="100px" height="80px" />
-          </Grid>
-          <Grid
-            className="bottom"
-            container
-            alignItems="center"
-            alignContent="center"
-            justify="center"
-          >
-            <Typography variant="h3" color="textSecondary">
-              Pruning
-            </Typography>
-            <Image src="/pruning.svg" width="100px" height="80px" />
-          </Grid>
-          <Grid
-            className="bottom"
-            container
-            alignItems="center"
-            alignContent="center"
-            justify="center"
-          >
-            <Typography variant="h3" color="textSecondary">
-              Light Treework
-            </Typography>
-            <Image src="/tree.svg" width="100px" height="80px" />
-          </Grid>
+        <Grid id="listGrid" item sm={12} md={6}>
+          <Image src="/services.svg" width="120px" height="85px" />
+          <span>
+            Mascot Lawn Care provides commercial and residential pressure washing and lawn care
+            services throughout Pinellas County.
+          </span>
+          <br />
+          <span>Other services include..</span>
+          <br />
+          <span className="dot">Hauling service</span>
+          <br />
+          <span className="dot">Landscaping</span>
+          <br />
+          <span className="dot">Sod installation</span>
+          <br />
+          <span className="dot">Pressure Washing</span>
+          <br />
+          <span className="dot">More to come!</span>
         </Grid>
-        <Grid container>
-          <FormGroup>
+      </Grid>
+      <Grid className="iconRow" container>
+        <Grid item xs={12} md={4}>
+          <Typography variant="h3" color="textSecondary">
+            Lawn Care
+          </Typography>
+          <Image src="/mowing.svg" width="100px" height="80px" />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Typography variant="h3" color="textSecondary">
+            Pruning
+          </Typography>
+          <Image src="/pruning.svg" width="100px" height="80px" />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Typography variant="h3" color="textSecondary">
+            Landscape
+          </Typography>
+          <Image src="/landscape.svg" width="100px" height="80px" />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h3" color="textSecondary" align="center">
+            Cleanup & Hauling
+          </Typography>
+          <Image src="/cleanup.svg" width="100px" height="80px" />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h3" color="textSecondary">
+            Light Treework
+          </Typography>
+          <Image src="/tree.svg" width="100px" height="80px" />
+        </Grid>
+      </Grid>
+      <Grid id="contactGrid" container spacing={1} justify="space-between">
+        <Grid item xs={12} md={6}>
+          <h1>CONTACT US!</h1>
+          <span>
+            Please feel free to send us a message with any questions or concerns if you are an
+            existing customer and if you would like a free estimate on any of our services.
+          </span>
+        </Grid>
+        <Grid item xs={12} md={5}>
+          <form id="contactForm">
             <Grid
               className="contactForm"
               container
@@ -199,53 +227,52 @@ const Home: BlitzPage = () => {
               alignContent="center"
             >
               <Grid item>
-                <Icon color="primary" component={Grid} fontSize="small">
-                  email_circle
-                </Icon>
+                <TextField
+                  id="contactEmail"
+                  label="Email Address"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </Grid>
               <Grid item>
-                <TextField id="contact-email" label="Email Address" />
-              </Grid>
-              <Grid item>
-                <Icon color="primary" component={Grid} fontSize="small">
-                  chat_circle
-                </Icon>
-              </Grid>
-              <Grid item>
-                <TextField id="contact-msg" label="Message" />
+                <TextField
+                  id="contactMessage"
+                  label="Message"
+                  placeholder="Placeholder"
+                  multiline
+                  onChange={(e) => setMessage(e.target.value)}
+                />
               </Grid>
               <Grid item>
                 <Recaptcha
-                  sitekey="6LcJ_HIaAAAAAMqLK9UxrA3RdGMs8mO9CSzBrEQy"
+                  sitekey={process.env.EMAILJS_API}
                   render="explicit"
                   verifyCallback={verifyCallback}
                   onloadCallback={callback}
                 />
               </Grid>
               <Grid item>
-                <Button disabled={!verified} color="primary">
+                <Button disabled={!verified} color="primary" onClick={onSubmit}>
                   Submit
                 </Button>
               </Grid>
             </Grid>
-          </FormGroup>
+          </form>
+          <Grid id="tyMsg" className="hidden" item xs={6}>
+            <h4>THANK YOU FOR CONTACTING US SOMEONE WILL RESPOND TO YOU AS SOON AS POSSIBLE!</h4>
+          </Grid>
         </Grid>
-      </main>
-
-      <footer>
-        <Grid
-          style={{ height: "100px", background: "" }}
-          container
-          alignItems="center"
-          alignContent="center"
-          justify="center"
-        >
-          <Typography component="span">
-            Mascot Lawncare, St. Petersburg Florida &copy;2021 All Rights Reserved
-          </Typography>
-        </Grid>
-      </footer>
-
+      </Grid>
+      <Grid
+        style={{ height: "100px", background: "green" }}
+        container
+        alignItems="center"
+        alignContent="center"
+        justify="center"
+      >
+        <Typography variant="subtitle1" className={classes.white}>
+          Mascot Lawncare, St. Petersburg Florida &copy;2021 All Rights Reserved
+        </Typography>
+      </Grid>
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap");
         .MuiFormGroup-root {
@@ -261,7 +288,9 @@ const Home: BlitzPage = () => {
         h4,
         h5,
         h6,
-        span {
+        span,
+        p,
+        .contactForm {
           font-family: "RocknRoll One", sans-serif !important;
         }
         .content {
@@ -293,6 +322,47 @@ const Home: BlitzPage = () => {
         .MuiToolbar-root {
           flex-wrap: wrap;
         }
+        .iconRow .MuiGrid-item {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          min-height: 200px;
+        }
+        #aboutGrid,
+        #listGrid,
+        #contactGrid {
+          padding: 50px;
+          font-size: 1.4em;
+          line-height: 2;
+        }
+        .dot:before {
+          content: "";
+          height: 15px;
+          width: 15px;
+          background-color: green;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 10px;
+        }
+        .contactForm .MuiGrid-item {
+          margin: 0;
+          box-sizing: border-box;
+          width: 100% !important;
+          margin: 20px 0;
+        }
+        .contactForm .MuiFormControl-root {
+          min-width: 92%;
+        }
+        .MuiFormLabel-root,
+        .MuiInput-underline::after,
+        .MuiButton-textPrimary {
+          color: #1b5e20 !important;
+          border-color: #1b5e20 !important;
+        }
+        .hidden {
+          display: none;
+        }
         @media (min-width: 768px) {
           body.SRLOpened {
             margin-right: 15px !important;
@@ -302,7 +372,7 @@ const Home: BlitzPage = () => {
           }
         }
       `}</style>
-    </div>
+    </>
   )
 }
 
