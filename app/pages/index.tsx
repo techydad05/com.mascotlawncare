@@ -86,6 +86,7 @@ const Home: BlitzPage = () => {
   const classes = useStyles()
   const [verified, setVerified] = useState(false)
   const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
   const [message, setMessage] = useState("")
 
   const verifyCallback = () => {
@@ -104,6 +105,7 @@ const Home: BlitzPage = () => {
       console.log("is verified sending mail")
       emailjs.send("default_service", "template_fndut97", {
         from_email: email,
+        from_phone: phone,
         message: message,
       })
       document.getElementById("contactForm")?.classList.add("hidden")
@@ -231,6 +233,13 @@ const Home: BlitzPage = () => {
                   id="contactEmail"
                   label="Email Address"
                   onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  id="contactPhone"
+                  label="Phone Number"
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </Grid>
               <Grid item>
